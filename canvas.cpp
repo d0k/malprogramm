@@ -39,11 +39,12 @@ void Canvas::Draw(wxDC& dc)
 {
 	// clear screen
 	dc.Clear();
-	dc.SetPen(*wxBLACK_PEN);
 
 	for (std::list<Data::Shape>::const_iterator i = shapelist.begin(); i != shapelist.end(); ++i) {
+		dc.SetPen(*wxBLACK_PEN);
 		dc.SetBrush(wxBrush(i->color));
 		if (i->type == wxT("line")) {
+			dc.SetPen(wxPen(i->color));
 			dc.DrawLine(i->left, i->top, i->width+i->left, i->height+i->top);
 		} else if (i->type == wxT("rectangle")) {
 			dc.DrawRectangle(i->left, i->top, i->width, i->height);

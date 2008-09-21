@@ -31,7 +31,7 @@ Window::Window() : wxFrame(NULL, wxID_ANY, _("Malprogramm"), wxDefaultPosition, 
 	createToolbar();
 
 	canvas->setShape(wxT("line"));
-	canvas->setColor(*wxWHITE);
+	canvas->setColor(*wxBLACK);
 	canvas->SetCursor(*wxCROSS_CURSOR);
 
 	Show();
@@ -49,13 +49,13 @@ void Window::createToolbar() {
 	wxBitmap bcircle = wxMEMORY_BITMAPEX(circle, wxBITMAP_TYPE_PNG);
 	wxBitmap bguy = wxMEMORY_BITMAPEX(guy, wxBITMAP_TYPE_PNG);
 
-	toolbar->AddRadioTool(0, wxT("Line"), bline);
-	toolbar->AddRadioTool(1, wxT("Triangle"), btriangle);
-	toolbar->AddRadioTool(2, wxT("Quad"), bquad);
-	toolbar->AddRadioTool(3, wxT("6"), bhexa);
-	toolbar->AddRadioTool(4, wxT("8"), bocta);
-	toolbar->AddRadioTool(5, wxT("Circle"), bcircle);
-	toolbar->AddRadioTool(6, wxT("Guy"), bguy);
+	toolbar->AddRadioTool(0, wxT("Line"), bline, wxNullBitmap, _("Line"));
+	toolbar->AddRadioTool(1, wxT("Triangle"), btriangle, wxNullBitmap, _("Undo"));
+	toolbar->AddRadioTool(2, wxT("Quad"), bquad, wxNullBitmap, _("Rectangle"));
+	toolbar->AddRadioTool(3, wxT("6"), bhexa, wxNullBitmap, _("Hexagon"));
+	toolbar->AddRadioTool(4, wxT("8"), bocta, wxNullBitmap, _("Octagon"));
+	toolbar->AddRadioTool(5, wxT("Circle"), bcircle, wxNullBitmap, _("Circle"));
+	toolbar->AddRadioTool(6, wxT("Guy"), bguy, wxNullBitmap, _("Guy"));
 
 	toolbar->AddSeparator();
 
@@ -68,14 +68,14 @@ void Window::createToolbar() {
 	wxBitmap bcolor7 = wxMEMORY_BITMAPEX(color7, wxBITMAP_TYPE_PNG);
 	wxBitmap bcolor8 = wxMEMORY_BITMAPEX(color8, wxBITMAP_TYPE_PNG);
 
-	toolbar->AddRadioTool(10, wxT("White"), bcolor1);
-	toolbar->AddRadioTool(11, wxT("Light Gray"), bcolor2);
-	toolbar->AddRadioTool(12, wxT("Gray"), bcolor3);
-	toolbar->AddRadioTool(13, wxT("Black"), bcolor4);
-	toolbar->AddRadioTool(14, wxT("Red"), bcolor5);
-	toolbar->AddRadioTool(15, wxT("Yellow"), bcolor6);
-	toolbar->AddRadioTool(16, wxT("Green"), bcolor7);
-	toolbar->AddRadioTool(17, wxT("Blue"), bcolor8);
+	toolbar->AddRadioTool(13, wxT("Black"), bcolor4, wxNullBitmap, _("Black"));
+	toolbar->AddRadioTool(12, wxT("Gray"), bcolor3, wxNullBitmap, _("Gray"));
+	toolbar->AddRadioTool(11, wxT("Light Gray"), bcolor2, wxNullBitmap, _("Light Gray"));
+	toolbar->AddRadioTool(10, wxT("White"), bcolor1, wxNullBitmap, _("White"));
+	toolbar->AddRadioTool(14, wxT("Red"), bcolor5, wxNullBitmap, _("Red"));
+	toolbar->AddRadioTool(15, wxT("Yellow"), bcolor6, wxNullBitmap, _("Yellow"));
+	toolbar->AddRadioTool(16, wxT("Green"), bcolor7, wxNullBitmap, _("Green"));
+	toolbar->AddRadioTool(17, wxT("Blue"), bcolor8, wxNullBitmap, _("Blue"));
 
 	toolbar->AddSeparator();
 
@@ -86,12 +86,12 @@ void Window::createToolbar() {
 	wxBitmap bsave = wxMEMORY_BITMAPEX(save, wxBITMAP_TYPE_PNG);
 	wxBitmap bquit = wxMEMORY_BITMAPEX(quit, wxBITMAP_TYPE_PNG);
 
-	toolbar->AddTool(wxID_UNDO, wxT("Undo"), bundo);
-	toolbar->AddTool(wxID_PRINT, wxT("Print"), bprint);
-	toolbar->AddTool(wxID_NEW, wxT("New"), bnewfile);
-	toolbar->AddTool(wxID_OPEN, wxT("Open"), bopenfile);
-	toolbar->AddTool(wxID_SAVE, wxT("Save"), bsave);
-	toolbar->AddTool(wxID_CLOSE, wxT("Quit"), bquit);
+	toolbar->AddTool(wxID_UNDO, wxT("Undo"), bundo, _("Undo"));
+	toolbar->AddTool(wxID_PRINT, wxT("Print"), bprint, _("Print"));
+	toolbar->AddTool(wxID_NEW, wxT("New"), bnewfile, _("New"));
+	toolbar->AddTool(wxID_OPEN, wxT("Open"), bopenfile, _("Open"));
+	toolbar->AddTool(wxID_SAVE, wxT("Save"), bsave, _("Save"));
+	toolbar->AddTool(wxID_CLOSE, wxT("Quit"), bquit, _("Quit"));
 	toolbar->Realize();
 }
 
