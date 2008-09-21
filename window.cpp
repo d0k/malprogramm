@@ -197,11 +197,24 @@ void Window::OnOpen(wxCommandEvent& WXUNUSED(event)) {
 }
 
 void Window::OnSave(wxCommandEvent& WXUNUSED(event)) {
-	wxFileDialog d(this, wxFileSelectorPromptStr, wxEmptyString, wxEmptyString, wxT("*.zngx"), wxFD_SAVE);
+	wxFileDialog d(this, wxFileSelectorPromptStr, wxEmptyString, wxEmptyString, wxT("Native (*.zngx)|*.zngx|PNG (*.png)|*.png"), wxFD_SAVE);
 
 	if (d.ShowModal() == wxID_OK) {
-		canvas->toFile(d.GetPath());
-		SetTitle(wxString::Format(_("%s - Malprogramm"), d.GetFilename().c_str()));
+		switch (d.GetFilterIndex()) {
+		case 0:
+			canvas->toFile(d.GetPath());
+			SetTitle(wxString::Format(_("%s - Malprogramm"), d.GetFilename().c_str()));
+			break;
+		case 1:
+			{
+			const wxSize& cs = canvas->GetClientSize();
+			wxBitmap buffer(cs.GetWidth(), cs.GetHeight());
+			wxMemoryDC dc(buffer);
+			canvas->Draw(dc);
+			buffer.SaveFile(d.GetPath(), wxBITMAP_TYPE_PNG);
+			}
+			break;
+		}
 	}
 }
 
