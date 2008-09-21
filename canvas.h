@@ -16,7 +16,9 @@ public:
 	void Draw(wxDC& dc);
 
 	void setShape(const wxString& shape) { this->shape = shape; }
+	const wxString& getShape() const { return this->shape; }
 	void setColor(const wxColour& color) { this->color = color; }
+	const wxColour& getColor() const { return this->color; }
 
 	void paint(wxPaintEvent& evt);
 	void mouseMoved(wxMouseEvent& event);

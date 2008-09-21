@@ -1,11 +1,12 @@
 #include <wx/print.h>
+#include <wx/colordlg.h>
 
 #include "window.h"
 #include "images.h"
 
 BEGIN_EVENT_TABLE(Window, wxFrame)
 EVT_MENU_RANGE(0, 7, Window::OnShapeSet)
-EVT_MENU_RANGE(10, 17, Window::OnColorSet)
+EVT_MENU_RANGE(10, 18, Window::OnColorSet)
 
 EVT_MENU(wxID_UNDO, Window::OnUndo)
 EVT_MENU(wxID_PRINT, Window::OnPrint)
@@ -78,6 +79,7 @@ void Window::createToolbar() {
 	toolbar->AddRadioTool(15, wxT("Yellow"), bcolor6, wxNullBitmap, _("Yellow"));
 	toolbar->AddRadioTool(16, wxT("Green"), bcolor7, wxNullBitmap, _("Green"));
 	toolbar->AddRadioTool(17, wxT("Blue"), bcolor8, wxNullBitmap, _("Blue"));
+	toolbar->AddRadioTool(18, wxT("Custom"), bguy, wxNullBitmap, _("Custom"));
 
 	toolbar->AddSeparator();
 
@@ -151,6 +153,9 @@ void Window::OnColorSet(wxCommandEvent& evt) {
 		break;
 	case 17:
 		canvas->setColor(*wxBLUE);
+		break;
+	case 18:
+		canvas->setColor(wxGetColourFromUser(this, canvas->getColor()));
 		break;
 	}
 }
