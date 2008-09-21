@@ -4,7 +4,7 @@
 #include "images.h"
 
 BEGIN_EVENT_TABLE(Window, wxFrame)
-EVT_MENU_RANGE(0, 6, Window::OnShapeSet)
+EVT_MENU_RANGE(0, 7, Window::OnShapeSet)
 EVT_MENU_RANGE(10, 17, Window::OnColorSet)
 
 EVT_MENU(wxID_UNDO, Window::OnUndo)
@@ -48,6 +48,7 @@ void Window::createToolbar() {
 	wxBitmap bocta = wxMEMORY_BITMAPEX(octagon, wxBITMAP_TYPE_PNG);
 	wxBitmap bcircle = wxMEMORY_BITMAPEX(circle, wxBITMAP_TYPE_PNG);
 	wxBitmap bguy = wxMEMORY_BITMAPEX(guy, wxBITMAP_TYPE_PNG);
+	wxBitmap btext = wxMEMORY_BITMAPEX(text, wxBITMAP_TYPE_PNG);
 
 	toolbar->AddRadioTool(0, wxT("Line"), bline, wxNullBitmap, _("Line"));
 	toolbar->AddRadioTool(1, wxT("Triangle"), btriangle, wxNullBitmap, _("Undo"));
@@ -56,6 +57,7 @@ void Window::createToolbar() {
 	toolbar->AddRadioTool(4, wxT("8"), bocta, wxNullBitmap, _("Octagon"));
 	toolbar->AddRadioTool(5, wxT("Circle"), bcircle, wxNullBitmap, _("Circle"));
 	toolbar->AddRadioTool(6, wxT("Guy"), bguy, wxNullBitmap, _("Guy"));
+	toolbar->AddRadioTool(7, wxT("Text"), btext, wxNullBitmap, _("Text"));
 
 	toolbar->AddSeparator();
 
@@ -117,6 +119,9 @@ void Window::OnShapeSet(wxCommandEvent& evt) {
 		break;
 	case 6:
 		canvas->setShape(wxT("guy"));
+		break;
+	case 7:
+		canvas->setShape(wxT("text"));
 		break;
 	}
 }

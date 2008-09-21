@@ -11,6 +11,7 @@ public:
 		wxString type;
 		long left, top, width, height;
 		wxColour color;
+		wxString text;
 	};
 	Data() : modified(false) {}
 	void undo();

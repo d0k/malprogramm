@@ -11,9 +11,18 @@ EVT_LEFT_UP(Canvas::mouseReleased)
 END_EVENT_TABLE()
 
 void Canvas::mouseDown(wxMouseEvent& evt) {
-	moving = true;
 	Shape s = { shape, evt.GetPosition().x, evt.GetPosition().y, 0, 0, color };
-	shapelist.push_back(s);
+	if (shape == wxT("text")) {
+		wxTextEntryDialog d(this, _("Text"));
+		if (d.ShowModal() == wxID_OK) {
+			s.text = d.GetValue();
+			shapelist.push_back(s);
+			Refresh();
+		}
+	} else {
+		shapelist.push_back(s);
+		moving = true;
+	}
 	modified = true;
 }
 
@@ -90,6 +99,9 @@ void Canvas::Draw(wxDC& dc)
 			dc.DrawLine(midx, midy+legs, i->left, i->top+i->height); // left leg
 			dc.DrawLine(midx, midy+legs, i->left+i->width, i->top+i->height); // right leg
 			dc.DrawEllipse(midx-head/2, i->top, head, legs); // head
+		} else if (i->type == wxT("text")) {
+			dc.SetTextForeground(i->color);
+			dc.DrawText(i->text, i->left, i->top);
 		}
 	}
 }

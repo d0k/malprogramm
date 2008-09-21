@@ -21,6 +21,10 @@ void Data::toFile(const wxString& filename) {
 		test->AddProperty(wxT("width"), wxString::Format(wxT("%d"), i->width));
 		test->AddProperty(wxT("height"), wxString::Format(wxT("%d"), i->height));
 		test->AddProperty(wxT("color"), i->color.GetAsString(wxC2S_HTML_SYNTAX));
+		if (i->type == wxT("text")) {
+			wxXmlNode *text = new wxXmlNode(test, wxXML_TEXT_NODE, wxEmptyString, i->text);
+			test->AddChild(text);
+		}
 		root->SetNext(test);
 	}
 
@@ -41,7 +45,7 @@ void Data::fromFile(const wxString &filename) {
 			(node->GetPropVal(wxT("width"), wxT("0"))).ToLong(&s.width);
 			(node->GetPropVal(wxT("height"), wxT("0"))).ToLong(&s.height);
 			s.color = wxColour(node->GetPropVal(wxT("color"), wxT("#000000")));
-
+			s.text = node->GetNodeContent();
 			shapelist.push_back(s);
 		}
 		node = node->GetNext();
