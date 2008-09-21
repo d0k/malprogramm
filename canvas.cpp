@@ -17,7 +17,7 @@ void Canvas::mouseDown(wxMouseEvent& evt) {
 	modified = true;
 }
 
-void Canvas::mouseReleased(wxMouseEvent& evt) {
+void Canvas::mouseReleased(wxMouseEvent& WXUNUSED(evt)) {
 	moving = false;
 }
 
@@ -30,7 +30,7 @@ void Canvas::mouseMoved(wxMouseEvent& evt) {
 	}
 }
 
-void Canvas::paint(wxPaintEvent& evt) {
+void Canvas::paint(wxPaintEvent& WXUNUSED(evt)) {
 	wxAutoBufferedPaintDC dc(this);
 	Draw(dc);
 }
@@ -79,21 +79,21 @@ void Canvas::Draw(wxDC& dc)
 		} else if (i->type == wxT("circle")) {
 			dc.DrawEllipse(i->left, i->top, i->width, i->height);
 		} else if (i->type == wxT("guy")) {
-			const int midx = (i->left + i->width)/2;
-			const int midy = (i->top + i->height)/2;
-			const int legs = (i->height - i->top)/4; // offset of arms & legs
-			const int head = (i->width - i->left)/4;
-			dc.DrawLine(midx, midy-legs, midx, midy+legs);
-			dc.DrawLine(midx, midy-legs, i->left, midy);
-			dc.DrawLine(midx, midy-legs, i->width, midy);
-			dc.DrawLine(midx, midy+legs, i->left, i->height);
-			dc.DrawLine(midx, midy+legs, i->width, i->height);
-			dc.DrawEllipse(midx-head/2, i->top, head, legs);
+			const int midx = i->left + i->width/2;
+			const int midy = i->top + i->height/2;
+			const int legs = i->height/4; // offset of arms & legs
+			const int head = i->width/4;
+			dc.DrawLine(midx, midy-legs, midx, midy+legs); // body
+			dc.DrawLine(midx, midy-legs, i->left, midy); // left arm
+			dc.DrawLine(midx, midy-legs, i->width+i->left, midy); // right arm
+			dc.DrawLine(midx, midy+legs, i->left, i->top+i->height); // left leg
+			dc.DrawLine(midx, midy+legs, i->left+i->width, i->top+i->height); // right leg
+			dc.DrawEllipse(midx-head/2, i->top, head, legs); // head
 		}
 	}
 }
 
-bool Canvas::OnPrintPage(int pageNum) {
+bool Canvas::OnPrintPage(int WXUNUSED(pageNum)) {
 	Draw(*GetDC());
 	return true;
 }
