@@ -107,6 +107,7 @@ void Canvas::Draw(wxDC& dc)
 }
 
 bool Canvas::OnPrintPage(int WXUNUSED(pageNum)) {
+	FitThisSizeToPage(GetClientSize());
 	Draw(*GetDC());
 	return true;
 }

@@ -169,8 +169,6 @@ void Window::OnUndo(wxCommandEvent& WXUNUSED(event)) {
 void Window::OnPrint(wxCommandEvent& WXUNUSED(event)) {
 	wxPrinter print;
 	print.GetPrintDialogData().GetPrintData().SetOrientation(wxLANDSCAPE);
-	canvas->FitThisSizeToPageMargins(wxSize(canvas->GetSize().GetWidth(), canvas->GetSize().GetHeight()),
-		print.GetPrintDialogData().GetPrintData());
 	print.Print(this, canvas);
 }
 
