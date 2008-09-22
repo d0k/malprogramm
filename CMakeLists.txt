@@ -3,6 +3,9 @@ project(b2 C CXX)
 cmake_minimum_required(VERSION 2.4)
 
 file(GLOB SRCS *.cpp)
+if(WIN32)
+	set(SRCS ${SRCS} resources/b.rc)
+endif(WIN32)
 add_executable(b2 WIN32 MACOSX_BUNDLE ${SRCS})
 
 find_package(wxWidgets REQUIRED base core xml)

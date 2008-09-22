@@ -19,8 +19,9 @@ EVT_CLOSE(Window::OnClose)
 END_EVENT_TABLE()
 
 Window::Window() : wxFrame(NULL, wxID_ANY, _("Malprogramm"), wxDefaultPosition, wxSize(250, 150)) {
-	wxImage::AddHandler(new wxPNGHandler);
-
+#ifdef __WXMSW__
+	SetIcon(wxICON(MAINICON));
+#endif
 	wxBoxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 
 	canvas = new Canvas(this);
