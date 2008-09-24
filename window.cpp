@@ -198,21 +198,26 @@ void Window::OnOpen(wxCommandEvent& WXUNUSED(event)) {
 
 		if (d.ShowModal() == wxID_OK) {
 			canvas->clear();
-			canvas->fromFile(d.GetPath());
-			canvas->Refresh();
-			SetTitle(wxString::Format(_("%s - Malprogramm"), d.GetFilename().c_str()));
+			if (canvas->fromFile(d.GetPath())) {
+				canvas->Refresh();
+				SetTitle(wxString::Format(_("%s - Malprogramm"), d.GetFilename().c_str()));
+			} else {
+				wxMessageBox(_("Error reading File!"), _("Error"), wxICON_ERROR);
+			}
 		}
 	}
 }
 
 void Window::OnSave(wxCommandEvent& WXUNUSED(event)) {
 	wxFileDialog d(this, wxFileSelectorPromptStr, wxEmptyString, wxEmptyString, wxT("Native (*.zngx)|*.zngx|PNG (*.png)|*.png"), wxFD_SAVE);
+	bool saved = false;
 
-	if (d.ShowModal() == wxID_OK) {
+	while (!saved && d.ShowModal() == wxID_OK) {
 		switch (d.GetFilterIndex()) {
 		case 0:
-			canvas->toFile(d.GetPath());
-			SetTitle(wxString::Format(_("%s - Malprogramm"), d.GetFilename().c_str()));
+			saved = canvas->toFile(d.GetPath());
+			if (saved)
+				SetTitle(wxString::Format(_("%s - Malprogramm"), d.GetFilename().c_str()));
 			break;
 		case 1:
 			{
@@ -220,10 +225,12 @@ void Window::OnSave(wxCommandEvent& WXUNUSED(event)) {
 			wxBitmap buffer(cs.GetWidth(), cs.GetHeight());
 			wxMemoryDC dc(buffer);
 			canvas->Draw(dc);
-			buffer.SaveFile(d.GetPath(), wxBITMAP_TYPE_PNG);
+			saved = buffer.SaveFile(d.GetPath(), wxBITMAP_TYPE_PNG);
 			}
 			break;
 		}
+		if (!saved)
+			wxMessageBox(_("Error writing File!"), _("Error"), wxICON_ERROR);
 	}
 }
 

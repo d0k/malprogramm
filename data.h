@@ -18,8 +18,8 @@ public:
 	void clear() { shapelist.clear(); }
 	bool isModified() const { return modified; }
 
-	void toFile(const wxString& filename);
-	void fromFile(const wxString& filename);
+	bool toFile(const wxString& filename);
+	bool fromFile(const wxString& filename);
 protected:
 	bool modified;
 	std::list<Shape> shapelist;

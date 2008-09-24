@@ -7,7 +7,7 @@ void Data::undo() {
 		shapelist.pop_back();
 }
 
-void Data::toFile(const wxString& filename) {
+bool Data::toFile(const wxString& filename) {
 	wxXmlDocument doc;
 
 	wxXmlNode *root = new wxXmlNode(NULL, wxXML_ELEMENT_NODE, wxT("shapes"));
@@ -28,12 +28,15 @@ void Data::toFile(const wxString& filename) {
 		root->SetNext(test);
 	}
 
-	doc.Save(filename);
-	modified = false;
+	modified = !doc.Save(filename);
+	return !modified;
 }
 
-void Data::fromFile(const wxString &filename) {
-	wxXmlDocument doc(filename);
+bool Data::fromFile(const wxString &filename) {
+	wxXmlDocument doc;
+
+	if (!doc.Load(filename))
+		return false;
 
 	wxXmlNode *node = doc.GetRoot()->GetChildren();
 	while (node) {
