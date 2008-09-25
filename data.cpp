@@ -94,9 +94,17 @@ bool Data::fromLegacyFile(const wxString &filename, const Data::legacyFormat for
 		}
 
 		Shape s;
+		s.left = x1;
+		s.top = y1;
+		s.width = x2-x1;
+		s.height = y2-y1;
+
+		s.color = wxColor(r, g, b);
+
 		switch (type) {
 			case 1:
 				s.type = wxT("line");
+				s.color = *wxBLACK;
 				break;
 			case 2:
 				s.type = wxT("triangle");
@@ -118,12 +126,6 @@ bool Data::fromLegacyFile(const wxString &filename, const Data::legacyFormat for
 				break;
 		}
 
-		s.left = x1;
-		s.top = y1;
-		s.width = x2-x1;
-		s.height = y2-y1;
-
-		s.color = wxColor(r, g, b);
 		shapelist.push_back(s);
 	}
 	modified = false;
