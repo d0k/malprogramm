@@ -20,6 +20,9 @@ public:
 
 	bool toFile(const wxString& filename);
 	bool fromFile(const wxString& filename);
+
+	enum legacyFormat { FORMAT_16, FORMAT_32 };
+	bool fromLegacyFile(const wxString& filename, const legacyFormat format);
 protected:
 	bool modified;
 	std::list<Shape> shapelist;

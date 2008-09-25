@@ -1,4 +1,6 @@
 #include <wx/xml/xml.h>
+#include <wx/wfstream.h>
+#include <wx/datstrm.h>
 
 #include "data.h"
 
@@ -54,4 +56,76 @@ bool Data::fromFile(const wxString &filename) {
 		node = node->GetNext();
 	}
 	modified = false;
+	return true;
+}
+
+bool Data::fromLegacyFile(const wxString &filename, const Data::legacyFormat format) {
+	wxFileInputStream file(filename);
+
+	if (!file.IsOk())
+		return false;
+
+	wxDataInputStream doc(file);
+
+	while (!file.Eof()) {
+		wxInt32 type, x1, x2, y1, y2;
+		wxUint8 r, g, b, a;
+
+		if (format == FORMAT_32)
+			type = doc.Read32();
+		else
+			type = doc.Read16();
+
+		r = doc.Read8();
+		g = doc.Read8();
+		b = doc.Read8();
+		a = doc.Read8();
+
+		if (format == FORMAT_32) {
+			x1 = doc.Read32();
+			y1 = doc.Read32();
+			x2 = doc.Read32();
+			y2 = doc.Read32();
+		} else {
+			x1 = doc.Read16();
+			y1 = doc.Read16();
+			x2 = doc.Read16();
+			y2 = doc.Read16();
+		}
+
+		Shape s;
+		switch (type) {
+			case 1:
+				s.type = wxT("line");
+				break;
+			case 2:
+				s.type = wxT("triangle");
+				break;
+			case 3:
+				s.type = wxT("rectangle");
+				break;
+			case 4:
+				s.type = wxT("hexagon");
+				break;
+			case 5:
+				s.type = wxT("octagon");
+				break;
+			case 6:
+				s.type = wxT("circle");
+				break;
+			case 7:
+				s.type = wxT("guy");
+				break;
+		}
+
+		s.left = x1;
+		s.top = y1;
+		s.width = x2-x1;
+		s.height = y2-y1;
+
+		s.color = wxColor(r, g, b);
+		shapelist.push_back(s);
+	}
+	modified = false;
+	return true;
 }
