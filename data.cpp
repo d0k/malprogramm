@@ -34,32 +34,37 @@ bool Data::toFile(const wxString& filename) {
 	return !modified;
 }
 
-bool Data::fromFile(const wxString &filename) {
-	wxXmlDocument doc;
+bool Data::fromFile(const wxString &filename, const Data::fileFormat format) {
+	if (format == FORMAT_XML) {
+		wxXmlDocument doc;
 
-	if (!doc.Load(filename))
-		return false;
+		if (!doc.Load(filename))
+			return false;
 
-	wxXmlNode *node = doc.GetRoot()->GetChildren();
-	while (node) {
-		if (node->GetName() == wxT("shape")) {
-			Shape s;
-			s.type = node->GetPropVal(wxT("type"), wxT("line"));
-			(node->GetPropVal(wxT("top"), wxT("0"))).ToLong(&s.top);
-			(node->GetPropVal(wxT("left"), wxT("0"))).ToLong(&s.left);
-			(node->GetPropVal(wxT("width"), wxT("0"))).ToLong(&s.width);
-			(node->GetPropVal(wxT("height"), wxT("0"))).ToLong(&s.height);
-			s.color = wxColour(node->GetPropVal(wxT("color"), wxT("#000000")));
-			s.text = node->GetNodeContent();
-			shapelist.push_back(s);
+		wxXmlNode *node = doc.GetRoot()->GetChildren();
+		while (node) {
+			if (node->GetName() == wxT("shape")) {
+				Shape s;
+				s.type = node->GetPropVal(wxT("type"), wxT("line"));
+				(node->GetPropVal(wxT("top"), wxT("0"))).ToLong(&s.top);
+				(node->GetPropVal(wxT("left"), wxT("0"))).ToLong(&s.left);
+				(node->GetPropVal(wxT("width"), wxT("0"))).ToLong(&s.width);
+				(node->GetPropVal(wxT("height"), wxT("0"))).ToLong(&s.height);
+				s.color = wxColour(node->GetPropVal(wxT("color"), wxT("#000000")));
+				s.text = node->GetNodeContent();
+				shapelist.push_back(s);
+			}
+			node = node->GetNext();
 		}
-		node = node->GetNext();
+		modified = false;
+		return true;
+	} else {
+		return fromLegacyFile(filename, format);
 	}
-	modified = false;
-	return true;
+
 }
 
-bool Data::fromLegacyFile(const wxString &filename, const Data::legacyFormat format) {
+bool Data::fromLegacyFile(const wxString &filename, const Data::fileFormat format) {
 	wxFileInputStream file(filename);
 
 	if (!file.IsOk())

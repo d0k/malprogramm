@@ -12,6 +12,8 @@ private:
 	Canvas *canvas;
 public:
 	Window();
+	void openFile(const wxString& filename, const Data::fileFormat format = Data::FORMAT_XML);
+
 	void OnShapeSet(wxCommandEvent&);
 	void OnColorSet(wxCommandEvent&);
 

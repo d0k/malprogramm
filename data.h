@@ -18,14 +18,15 @@ public:
 	void clear() { shapelist.clear(); }
 	bool isModified() const { return modified; }
 
-	bool toFile(const wxString& filename);
-	bool fromFile(const wxString& filename);
+	enum fileFormat { FORMAT_XML = 0, FORMAT_16 = 1, FORMAT_32 = 2 };
 
-	enum legacyFormat { FORMAT_16, FORMAT_32 };
-	bool fromLegacyFile(const wxString& filename, const legacyFormat format);
+	bool toFile(const wxString& filename);
+	bool fromFile(const wxString& filename, const fileFormat format = FORMAT_XML);
 protected:
 	bool modified;
 	std::list<Shape> shapelist;
+private:
+	bool fromLegacyFile(const wxString& filename, const fileFormat format);
 };
 
 #endif

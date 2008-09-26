@@ -192,32 +192,23 @@ void Window::OnNew(wxCommandEvent& WXUNUSED(event)) {
 	}
 }
 
+void Window::openFile(const wxString& filename, const Data::fileFormat format) {
+	canvas->clear();
+
+	if (canvas->fromFile(filename, format)) {
+		canvas->Refresh();
+		SetTitle(wxString::Format(_("%s - Malprogramm"), filename.c_str()));
+	} else {
+		wxMessageBox(_("Error reading File!"), _("Error"), wxICON_ERROR);
+	}
+}
+
 void Window::OnOpen(wxCommandEvent& WXUNUSED(event)) {
 	if (askToSave()) {
 		wxFileDialog d(this, wxFileSelectorPromptStr, wxEmptyString, wxEmptyString, wxT("Native (*.zngx)|*.zngx|Legacy 16 Bit (*.ZNG)|*.ZNG|Legacy 32 Bit (*.ZNG)|*.ZNG"));
 
-		if (d.ShowModal() == wxID_OK) {
-			bool success = false;
-			canvas->clear();
-			switch (d.GetFilterIndex()) {
-				case 0:
-					success = canvas->fromFile(d.GetPath());
-					break;
-				case 1:
-					success = canvas->fromLegacyFile(d.GetPath(), Data::FORMAT_16);
-					break;
-				case 2:
-					success = canvas->fromLegacyFile(d.GetPath(), Data::FORMAT_32);
-					break;
-			}
-
-			if (success) {
-				canvas->Refresh();
-				SetTitle(wxString::Format(_("%s - Malprogramm"), d.GetFilename().c_str()));
-			} else {
-				wxMessageBox(_("Error reading File!"), _("Error"), wxICON_ERROR);
-			}
-		}
+		if (d.ShowModal() == wxID_OK)
+			openFile(d.GetPath(), static_cast<Data::fileFormat>(d.GetFilterIndex()));
 	}
 }
 

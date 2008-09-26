@@ -6,7 +6,9 @@ IMPLEMENT_APP(Application)
 bool Application::OnInit()
 {
 	wxImage::AddHandler(new wxPNGHandler);
-	new Window();
+	Window *window = new Window();
+	if (argc > 1)
+		window->openFile(argv[1]);
 
 	return true;
 }
