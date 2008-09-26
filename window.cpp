@@ -32,7 +32,7 @@ Window::Window() : wxFrame(NULL, wxID_ANY, _("Malprogramm"), wxDefaultPosition, 
 
 	createToolbar();
 
-	canvas->setShape(wxT("line"));
+	canvas->setShape(Data::SHAPE_LINE);
 	canvas->setColor(*wxBLACK);
 	canvas->SetCursor(*wxCROSS_CURSOR);
 
@@ -101,32 +101,7 @@ void Window::createToolbar() {
 }
 
 void Window::OnShapeSet(wxCommandEvent& evt) {
-	switch (evt.GetId()) {
-	case 0:
-		canvas->setShape(wxT("line"));
-		break;
-	case 1:
-		canvas->setShape(wxT("triangle"));
-		break;
-	case 2:
-		canvas->setShape(wxT("rectangle"));
-		break;
-	case 3:
-		canvas->setShape(wxT("hexagon"));
-		break;
-	case 4:
-		canvas->setShape(wxT("octagon"));
-		break;
-	case 5:
-		canvas->setShape(wxT("circle"));
-		break;
-	case 6:
-		canvas->setShape(wxT("guy"));
-		break;
-	case 7:
-		canvas->setShape(wxT("text"));
-		break;
-	}
+	canvas->setShape(static_cast<Data::shapeType>(evt.GetId()));
 }
 
 void Window::OnColorSet(wxCommandEvent& evt) {

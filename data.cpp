@@ -9,6 +9,51 @@ void Data::undo() {
 		shapelist.pop_back();
 }
 
+const wxString Data::shapeTypeToText(const Data::shapeType type) {
+	switch (type) {
+		case SHAPE_LINE:
+			return wxT("line");
+		case SHAPE_TRIANGLE:
+			return wxT("triangle");
+		case SHAPE_RECTANGLE:
+			return wxT("rectangle");
+		case SHAPE_HEXAGON:
+			return wxT("hexagon");
+		case SHAPE_OCTAGON:
+			return wxT("octagon");
+		case SHAPE_CIRCLE:
+			return wxT("circle");
+		case SHAPE_GUY:
+			return wxT("guy");
+		case SHAPE_TEXT:
+			return wxT("text");
+	}
+	wxASSERT(false);
+	return wxEmptyString;
+}
+
+Data::shapeType Data::textToShapeType(const wxString& type) {
+	if (type == wxT("line"))
+		return SHAPE_LINE;
+	if (type == wxT("triangle"))
+		return SHAPE_TRIANGLE;
+	if (type == wxT("rectangle"))
+		return SHAPE_RECTANGLE;
+	if (type == wxT("hexagon"))
+		return SHAPE_HEXAGON;
+	if (type == wxT("octagon"))
+		return SHAPE_OCTAGON;
+	if (type == wxT("circle"))
+		return SHAPE_CIRCLE;
+	if (type == wxT("guy"))
+		return SHAPE_GUY;
+	if (type == wxT("text"))
+		return SHAPE_TEXT;
+
+	wxASSERT(false);
+	return SHAPE_UNKNOWN;
+}
+
 bool Data::toFile(const wxString& filename) {
 	wxXmlDocument doc;
 
@@ -17,13 +62,13 @@ bool Data::toFile(const wxString& filename) {
 
 	for (std::list<Shape>::const_reverse_iterator i = shapelist.rbegin(); i != shapelist.rend(); ++i) {
 		wxXmlNode *test = new wxXmlNode(root, wxXML_ELEMENT_NODE, wxT("shape"));
-		test->AddProperty(wxT("type"), i->type);
+		test->AddProperty(wxT("type"), shapeTypeToText(i->type));
 		test->AddProperty(wxT("top"), wxString::Format(wxT("%d"), i->top));
 		test->AddProperty(wxT("left"), wxString::Format(wxT("%d"), i->left));
 		test->AddProperty(wxT("width"), wxString::Format(wxT("%d"), i->width));
 		test->AddProperty(wxT("height"), wxString::Format(wxT("%d"), i->height));
 		test->AddProperty(wxT("color"), i->color.GetAsString(wxC2S_HTML_SYNTAX));
-		if (i->type == wxT("text")) {
+		if (i->type == SHAPE_TEXT) {
 			wxXmlNode *text = new wxXmlNode(test, wxXML_TEXT_NODE, wxEmptyString, i->text);
 			test->AddChild(text);
 		}
@@ -45,7 +90,7 @@ bool Data::fromFile(const wxString &filename, const Data::fileFormat format) {
 		while (node) {
 			if (node->GetName() == wxT("shape")) {
 				Shape s;
-				s.type = node->GetPropVal(wxT("type"), wxT("line"));
+				s.type = textToShapeType(node->GetPropVal(wxT("type"), wxT("line")));
 				(node->GetPropVal(wxT("top"), wxT("0"))).ToLong(&s.top);
 				(node->GetPropVal(wxT("left"), wxT("0"))).ToLong(&s.left);
 				(node->GetPropVal(wxT("width"), wxT("0"))).ToLong(&s.width);
@@ -104,32 +149,12 @@ bool Data::fromLegacyFile(const wxString &filename, const Data::fileFormat forma
 		s.width = x2-x1;
 		s.height = y2-y1;
 
-		s.color = wxColor(r, g, b);
+		if (type == 1)
+			s.color = *wxBLACK;
+		else
+			s.color = wxColor(r, g, b);
 
-		switch (type) {
-			case 1:
-				s.type = wxT("line");
-				s.color = *wxBLACK;
-				break;
-			case 2:
-				s.type = wxT("triangle");
-				break;
-			case 3:
-				s.type = wxT("rectangle");
-				break;
-			case 4:
-				s.type = wxT("hexagon");
-				break;
-			case 5:
-				s.type = wxT("octagon");
-				break;
-			case 6:
-				s.type = wxT("circle");
-				break;
-			case 7:
-				s.type = wxT("guy");
-				break;
-		}
+		s.type = static_cast<shapeType>(type-1);
 
 		shapelist.push_back(s);
 	}
