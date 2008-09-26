@@ -31,7 +31,7 @@ void Canvas::mouseReleased(wxMouseEvent& WXUNUSED(evt)) {
 }
 
 void Canvas::mouseMoved(wxMouseEvent& evt) {
-	if (moving) {
+	if (moving && evt.ButtonIsDown(wxMOUSE_BTN_LEFT) && !shapelist.empty()) {
 		Shape& s = *(shapelist.rbegin());
 		s.width = evt.GetPosition().x - s.left;
 		s.height = evt.GetPosition().y - s.top;
