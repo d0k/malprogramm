@@ -60,7 +60,7 @@ bool Data::toFile(const wxString& filename) {
 	wxXmlNode *root = new wxXmlNode(NULL, wxXML_ELEMENT_NODE, wxT("shapes"));
 	doc.SetRoot(root);
 
-	for (std::list<Shape>::const_reverse_iterator i = shapelist.rbegin(); i != shapelist.rend(); ++i) {
+	for (std::list<Shape>::reverse_iterator i = shapelist.rbegin(); i != shapelist.rend(); ++i) {
 		wxXmlNode *test = new wxXmlNode(root, wxXML_ELEMENT_NODE, wxT("shape"));
 		test->AddProperty(wxT("type"), shapeTypeToText(i->type));
 		test->AddProperty(wxT("top"), wxString::Format(wxT("%d"), i->top));
