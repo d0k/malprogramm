@@ -32,7 +32,7 @@ Window::Window() : wxFrame(NULL, wxID_ANY, _("Malprogramm"), wxDefaultPosition, 
 
 	createToolbar();
 
-	canvas->setShape(Data::SHAPE_LINE);
+	canvas->setShape(ShapeFactory::SHAPE_LINE);
 	canvas->setColor(*wxBLACK);
 	canvas->SetCursor(*wxCROSS_CURSOR);
 
@@ -101,7 +101,7 @@ void Window::createToolbar() {
 }
 
 void Window::OnShapeSet(wxCommandEvent& evt) {
-	canvas->setShape(static_cast<Data::shapeType>(evt.GetId()));
+	canvas->setShape(static_cast<ShapeFactory::shapeType>(evt.GetId()));
 }
 
 void Window::OnColorSet(wxCommandEvent& evt) {
