@@ -1,7 +1,10 @@
 #ifndef _WXINCLUDE_IMAGES_H_
 #define _WXINCLUDE_IMAGES_H_
 
+#include <wx/wxprec.h>
+#ifndef WX_PRECOMP
 #include <wx/wx.h>
+#endif
 #include <wx/mstream.h>
 
 #define wxMEMORY_BITMAPEX(name, type) _wxConvertMemoryToBitmap(name, sizeof(name), type)

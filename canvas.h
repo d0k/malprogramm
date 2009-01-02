@@ -1,7 +1,10 @@
 #ifndef _CANVAS_H
 #define _CANVAS_H
 
+#include <wx/wxprec.h>
+#ifndef WX_PRECOMP
 #include <wx/wx.h>
+#endif
 #include <wx/print.h>
 
 #include "data.h"

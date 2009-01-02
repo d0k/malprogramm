@@ -1,7 +1,10 @@
 #ifndef _WINDOW_H
 #define _WINDOW_H
 
+#include <wx/wxprec.h>
+#ifndef WX_PRECOMP
 #include <wx/wx.h>
+#endif
 
 #include "canvas.h"
 
