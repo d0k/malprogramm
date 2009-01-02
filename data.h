@@ -1,5 +1,5 @@
-#ifndef _DATA_H
-#define _DATA_H
+#ifndef DATA_H
+#define DATA_H
 
 #include <list>
 #include <wx/wxprec.h>

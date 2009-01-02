@@ -1,5 +1,5 @@
-#ifndef _CANVAS_H
-#define _CANVAS_H
+#ifndef CANVAS_H
+#define CANVAS_H
 
 #include <wx/wxprec.h>
 #ifndef WX_PRECOMP

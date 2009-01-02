@@ -1,5 +1,5 @@
-#ifndef _WXINCLUDE_IMAGES_H_
-#define _WXINCLUDE_IMAGES_H_
+#ifndef WXINCLUDE_IMAGES_H
+#define WXINCLUDE_IMAGES_H
 
 #include <wx/wxprec.h>
 #ifndef WX_PRECOMP
