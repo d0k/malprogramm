@@ -71,6 +71,7 @@ void Window::createToolbar() {
 	wxBitmap bcolor6 = wxMEMORY_BITMAPEX(color6, wxBITMAP_TYPE_PNG);
 	wxBitmap bcolor7 = wxMEMORY_BITMAPEX(color7, wxBITMAP_TYPE_PNG);
 	wxBitmap bcolor8 = wxMEMORY_BITMAPEX(color8, wxBITMAP_TYPE_PNG);
+	wxBitmap bchoosecolor = wxMEMORY_BITMAPEX(choosecolor, wxBITMAP_TYPE_PNG);
 
 	toolbar->AddRadioTool(13, wxT("Black"), bcolor4, wxNullBitmap, _("Black"));
 	toolbar->AddRadioTool(12, wxT("Gray"), bcolor3, wxNullBitmap, _("Gray"));
@@ -80,7 +81,7 @@ void Window::createToolbar() {
 	toolbar->AddRadioTool(15, wxT("Yellow"), bcolor6, wxNullBitmap, _("Yellow"));
 	toolbar->AddRadioTool(16, wxT("Green"), bcolor7, wxNullBitmap, _("Green"));
 	toolbar->AddRadioTool(17, wxT("Blue"), bcolor8, wxNullBitmap, _("Blue"));
-	toolbar->AddRadioTool(18, wxT("Custom"), bguy, wxNullBitmap, _("Custom"));
+	toolbar->AddRadioTool(18, wxT("Custom"), bchoosecolor, wxNullBitmap, _("Custom"));
 
 	toolbar->AddSeparator();
 
