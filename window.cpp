@@ -18,7 +18,7 @@ EVT_MENU(wxID_CLOSE, Window::OnQuit)
 EVT_CLOSE(Window::OnClose)
 END_EVENT_TABLE()
 
-Window::Window() : wxFrame(NULL, wxID_ANY, _("Malprogramm"), wxDefaultPosition, wxSize(250, 150)) {
+Window::Window() : wxFrame(NULL, wxID_ANY, _("Malprogramm"), wxDefaultPosition, wxSize(800, 600)) {
 #ifdef __WXMSW__
 	SetIcon(wxICON(MAINICON));
 #endif
@@ -37,7 +37,6 @@ Window::Window() : wxFrame(NULL, wxID_ANY, _("Malprogramm"), wxDefaultPosition, 
 	canvas->SetCursor(*wxCROSS_CURSOR);
 
 	Show();
-	Maximize();
 }
 
 void Window::createToolbar() {
