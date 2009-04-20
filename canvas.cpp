@@ -46,6 +46,7 @@ void Canvas::paint(wxPaintEvent& WXUNUSED(evt)) {
 
 void Canvas::Draw(wxDC& dc)
 {
+	dc.SetBackground(*wxWHITE);
 	// clear screen
 	dc.Clear();
 
