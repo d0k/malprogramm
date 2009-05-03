@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.0
 
+import sys
 import os
 import glob
 
@@ -24,10 +25,10 @@ header = [ "#ifndef WXINCLUDE_IMAGES_H\n",
 
 footer = "#endif /* WXINCLUDE_IMAGES_H */\n"
 
-with open("images.h", "w+") as f:
+with open(sys.argv[1], "w+") as f:
 	f.writelines(header)
 
-	for png in glob.iglob(os.path.join("resources", "*.png")):
+	for png in glob.iglob(os.path.join(sys.argv[2], "*.png")):
 		name = os.path.splitext(os.path.basename(png))[0]
 		f.write("static const unsigned char " + name + "[] = {\n")
 		with open(png, "rb") as image:
