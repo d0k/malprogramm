@@ -56,8 +56,8 @@ static long wxstrtol(const wxString& s) {
 Shape* ShapeFactory::createShapeFromXML(wxXmlNode *node) {
 	shapeType type = textToShapeType(node->GetPropVal(wxT("type"), wxT("line")));
 	Shape *s  = createShape(type,
-							wxstrtol(node->GetPropVal(wxT("top"), wxT("0"))),
 							wxstrtol(node->GetPropVal(wxT("left"), wxT("0"))),
+							wxstrtol(node->GetPropVal(wxT("top"), wxT("0"))),
 							wxstrtol(node->GetPropVal(wxT("width"), wxT("0"))),
 							wxstrtol(node->GetPropVal(wxT("height"), wxT("0"))),
 							wxColour(node->GetPropVal(wxT("color"), wxT("#000000"))));
