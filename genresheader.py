@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.0
+#!/usr/bin/env python
 
 import sys
 import os
@@ -34,7 +34,7 @@ with open(sys.argv[1], "w+") as f:
 		with open(png, "rb") as image:
 			data = image.read()
 			for byte in data:
-				f.write(hex(byte))
+				f.write(hex(ord(byte)))
 				f.write(",")
 		f.write("\n};\n\n")
 
